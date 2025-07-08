@@ -1,6 +1,6 @@
 import { celebrate, Joi, Segments } from 'celebrate';
 
-export const orderValidator = celebrate({
+const orderValidator = celebrate({
   [Segments.BODY]: Joi.object().keys({
     payment: Joi.string().valid('card', 'online').required(),
     email: Joi.string().email().required(),
@@ -12,3 +12,5 @@ export const orderValidator = celebrate({
     ),
   }),
 });
+
+export default orderValidator;

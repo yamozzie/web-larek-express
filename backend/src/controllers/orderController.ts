@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { BadRequestError } from '../errors/badRequestError';
 import Product from '../models/productModel';
 
-export const createOrder = async (
+const createOrder = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -29,7 +29,7 @@ export const createOrder = async (
     if (!Array.isArray(items) || items.length === 0) {
       return next(new BadRequestError('Массив товаров пуст или отсутствует'));
     }
-    if (typeof total !== 'number' || isNaN(total)) {
+    if (typeof total !== 'number' || Number.isNaN(total)) {
       return next(new BadRequestError('Некорректная сумма заказа'));
     }
 
@@ -54,8 +54,10 @@ export const createOrder = async (
     const totalPrice = products.reduce((acc, p) => acc + (p.price || 0), 0);
 
     const orderId = faker.string.uuid();
-    res.status(201).json({ id: orderId, total: totalPrice });
+    return res.status(201).json({ id: orderId, total: totalPrice });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
+
+export default createOrder;

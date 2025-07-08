@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import Product from '../models/productModel';
+import { celebrate, Joi, Segments } from 'celebrate';
+
+import Product, { IProduct } from '../models/productModel';
 
 export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -9,6 +11,18 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const productSchema = Joi.object<IProduct>({
+  title: Joi.string().min(3).max(30).required(),
+  image: { fileName: Joi.string(), originalName: Joi.string() },
+  category: Joi.string().required(),
+  description: Joi.string(),
+  price: Joi.number(),
+});
+
+export const productRouteValidator = celebrate({
+  [Segments.BODY]: productSchema,
+});
 
 export const createProduct = async (
   req: Request,

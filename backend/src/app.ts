@@ -5,8 +5,8 @@ import { errors } from 'celebrate';
 
 import productRoutes from './routes/productRoutes';
 import orderRoutes from './routes/orderRoutes';
-import { NotFoundError } from './errors/notFoundError';
-import { errorHandler } from './middlewares/errorHandler';
+import NotFoundError from './errors/notFoundError';
+import errorHandler from './middlewares/errorHandler';
 import { requestLogger, errorLogger } from './middlewares/logger';
 
 const app = express();
