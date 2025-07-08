@@ -10,7 +10,10 @@ const errorHandler: ErrorRequestHandler = (
 ) => {
   const statusCode = err.statusCode || 500;
   const message = statusCode === 500 ? 'Server error' : err.message;
-  res.status(statusCode).send({ message });
+  if (err.name === 'ValidationError') {
+    return res.status(400).json({ message: err.message });
+  }
+  return res.status(statusCode).send({ message });
   next();
 };
 

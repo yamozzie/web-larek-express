@@ -24,9 +24,12 @@ app.use(errorLogger);
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new NotFoundError('Маршрут не найден'));
 });
-app.use(errorHandler);
+
 app.use(errors());
+app.use(errorHandler);
+
 
 mongoose.connect(DB_ADDRESS);
 
+// eslint-disable-next-line no-console
 app.listen(PORT, () => { console.log(`App is listening on port ${PORT}`); });
