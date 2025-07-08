@@ -28,7 +28,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use(errors());
 app.use(errorHandler);
 
-
 mongoose.connect(DB_ADDRESS);
 
 // eslint-disable-next-line no-console

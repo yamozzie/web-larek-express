@@ -42,7 +42,7 @@ export const createProduct = async (
       description,
       price,
     });
-    res.status(201).send({ data: product });
+    return res.status(201).send({ data: product });
   } catch (error: any) {
     if (error instanceof Error && error.message.includes('E11000')) {
       return next(new ConflictError(error.message));

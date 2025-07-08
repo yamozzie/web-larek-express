@@ -1,4 +1,4 @@
-export class BadRequestError extends Error {
+class BadRequestError extends Error {
   public statusCode: number;
 
   constructor(message: string) {

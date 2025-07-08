@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { faker } from '@faker-js/faker';
 import { Joi } from 'celebrate';
 
-import { BadRequestError } from '../errors/badRequestError';
+import BadRequestError from '../errors/badRequestError';
 import Product from '../models/productModel';
 
 interface IOrder {
@@ -32,11 +32,10 @@ const createOrder = async (
   next: NextFunction,
 ) => {
   try {
-
-    const { error, value } = orderSchema.validate(req.body as IOrder)
+    const { error, value } = orderSchema.validate(req.body as IOrder);
 
     if (error) {
-      return next(new BadRequestError(`Validation error: ${error.message}`))
+      return next(new BadRequestError(`Validation error: ${error.message}`));
     }
 
     const products = (
@@ -52,18 +51,18 @@ const createOrder = async (
     if (products.length !== value.items.length) {
       return next(
         new BadRequestError(
-          'Product data error: not all products are available now'
-        )
-      )
+          'Product data error: not all products are available now',
+        ),
+      );
     }
 
     const totalPrice = products.reduce((acc, p) => acc + (p.price || 0), 0);
     if (value.total !== totalPrice) {
       return next(
         new BadRequestError(
-          'Order data error: Order total is not equal products prices'
-        )
-      )
+          'Order data error: Order total is not equal products prices',
+        ),
+      );
     }
 
     const orderId = faker.string.uuid();

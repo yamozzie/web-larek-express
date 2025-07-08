@@ -1,4 +1,4 @@
-export class ConflictError extends Error {
+class ConflictError extends Error {
   public statusCode: number;
 
   constructor(message: string) {
